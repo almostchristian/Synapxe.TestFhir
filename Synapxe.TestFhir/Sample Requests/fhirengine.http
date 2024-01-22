@@ -1,0 +1,10 @@
+@baseUrl=https://localhost:5001
+@applicationId=test-app
+
+### Metadata Request:
+
+GET {{baseUrl}}/metadata
+X-Ihis-SourceApplication: {{applicationId}}
+      
+### Health Check Request:
+GET {{baseUrl}}/health

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Synapxe.TestFhir.IntegrationTests": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:55483;http://localhost:55484"
+    }
+  }
+}

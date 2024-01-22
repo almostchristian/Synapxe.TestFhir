@@ -1,0 +1,127 @@
+@baseUrl=https://localhost:5001
+@applicationId=test-app
+
+### Create Appointment Request:
+# @name createAppointmentRequest
+
+POST {{baseUrl}}/Appointment
+X-Ihis-SourceApplication: {{applicationId}}
+Content-Type: application/fhir+json
+
+{
+  "resourceType": "Appointment",
+  "status": "proposed",
+  "start": "2120-01-01T12:00:00+08:00",
+  "end": "2120-01-01T12:30:00+08:00",
+  "participant": [
+    {
+      "actor": {
+        "reference": "Patient/testpatient"
+      },
+      "status": "tentative"
+    }
+  ]
+}
+
+
+### Get Appointment Request:
+@apptId = {{createAppointmentRequest.response.body.$.id}}
+# @name getAppointmentRequest
+GET {{baseUrl}}/Appointment/{{apptId}}
+X-Ihis-SourceApplication: {{applicationId}}
+
+### Update Appointment Request:
+# @name updateAppointmentRequest
+
+PUT {{baseUrl}}/Appointment/{{apptId}}
+X-Ihis-SourceApplication: {{applicationId}}
+Content-Type: application/fhir+json
+
+{
+  "resourceType": "Appointment",
+  "id": "{{apptId}}",
+  "status": "proposed",
+  "start": "2120-01-01T12:00:00+08:00",
+  "end": "2120-01-01T12:30:00+08:00",
+  "description": "For followup",
+  "participant": [
+    {
+      "actor": {
+        "reference": "Patient/testpatient"
+      },
+      "status": "tentative"
+    }
+  ]
+}
+
+
+### Cancel Appointment Update Request:
+# @name cancelAppointmentUpdateRequest
+
+PUT {{baseUrl}}/Appointment/{{apptId}}
+X-Ihis-SourceApplication: {{applicationId}}
+Content-Type: application/fhir+json
+
+{
+  "resourceType": "Appointment",
+  "id": "{{apptId}}",
+  "status": "cancelled",
+  "cancelationReason": {
+    "coding": [
+      {
+        "code": "lost-interest",
+        "display": "Lost interest"
+      }
+    ]
+  },
+  "start": "2120-01-01T12:00:00+08:00",
+  "end": "2120-01-01T12:30:00+08:00",
+  "description": "For followup",
+  "participant": [
+    {
+      "actor": {
+        "reference": "Patient/testpatient"
+      },
+      "status": "tentative"
+    }
+  ]
+}
+
+### Cancel Appointment Operation Request:
+# @name cancelAppointmentOperationRequest
+
+POST {{baseUrl}}/Appointment/{{apptId}}/$cancel
+X-Ihis-SourceApplication: {{applicationId}}
+Content-Type: application/fhir+json
+
+{
+  "resourceType": "Parameters",
+  "parameter": [
+    {
+      "name": "cancellationReason",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "code": "lost-interest"
+          }
+        ]
+      }
+    }
+  ]
+}
+
+      
+### Search Cancelled Appointment Request:
+# @name searchCancelledAppointmentRequest
+GET {{baseUrl}}/Appointment?status=cancelled
+X-Ihis-SourceApplication: {{applicationId}}
+      
+
+
+### Search by Post Cancelled Appointment Request:
+# @name searchCancelledAppointmentRequest
+POST {{baseUrl}}/Appointment/_search
+X-Ihis-SourceApplication: {{applicationId}}
+Content-Type: application/x-www-form-urlencoded
+
+status=cancelled

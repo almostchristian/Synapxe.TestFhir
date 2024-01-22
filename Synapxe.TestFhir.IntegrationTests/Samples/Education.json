@@ -1,0 +1,12 @@
+{
+  "resourceType": "Education",
+  "id": "michel-maths",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns='http://www.w3.org/1999/xhtml'>Michel has studied Maths at Leiden University</div>"
+  },
+  "subject": { "reference": "Practitioner/michel" },
+  "institute": { "reference": "Organization/unileiden" },
+  "study": "Maths",
+  "graduatedDate": "1996-03-21"
+}

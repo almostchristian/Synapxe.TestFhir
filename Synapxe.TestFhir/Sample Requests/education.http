@@ -1,0 +1,46 @@
+@baseUrl=https://localhost:5001
+@applicationId=test-app
+
+### Create Education Request:
+# @name createEducationRequest
+
+POST {{baseUrl}}/Education
+X-Ihis-SourceApplication: {{applicationId}}
+Content-Type: application/fhir+json
+
+{
+  "resourceType": "Education",
+  "subject": { "reference": "Practitioner/donn" },
+  "institute": { "reference": "Organization/synapxe" },
+  "study": "Maths",
+  "graduatedDate": "2008-03-21"
+}
+
+
+### Get Education Request:
+@eduId = {{createEducationRequest.response.body.$.id}}
+# @name getEducationRequest
+GET {{baseUrl}}/Education/{{eduId}}
+X-Ihis-SourceApplication: {{applicationId}}
+
+### Update Education Request:
+# @name updateEducationRequest
+
+PUT {{baseUrl}}/Education/{{eduId}}
+X-Ihis-SourceApplication: {{applicationId}}
+Content-Type: application/fhir+json
+
+{
+  "resourceType": "Education",
+  "id": "{{eduId}}",
+  "subject": { "reference": "Practitioner/donn" },
+  "institute": { "reference": "Organization/synapxe" },
+  "study": "Geology",
+  "graduatedDate": "2008-03-21"
+}
+
+      
+### Search Cancelled Appointment Request:
+# @name searchCancelledAppointmentRequest
+GET {{baseUrl}}/Education?institute=Organization/synapxe
+X-Ihis-SourceApplication: {{applicationId}}
